@@ -1,0 +1,26 @@
+# Production dependencies
+pandas>=2.1.0
+numpy>=1.24.0
+requests>=2.31.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+structlog>=23.2.0
+typer[all]>=0.9.0
+streamlit>=1.28.0
+openpyxl>=3.1.0
+xlsxwriter>=3.1.0
+jinja2>=3.1.0
+pandera>=0.18.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+
+# Development dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+black>=23.9.0
+ruff>=0.1.0
+isort>=5.12.0
+mypy>=1.6.0
+pre-commit>=3.5.0
