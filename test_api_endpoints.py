@@ -5,6 +5,7 @@ Test script to explore EIA API endpoints
 
 import requests
 import json
+import os
 
 def test_endpoint(endpoint, api_key):
     """Test a specific API endpoint"""
@@ -63,7 +64,11 @@ def test_endpoint(endpoint, api_key):
 
 def main():
     """Test various EIA API endpoints"""
-    api_key = "7Zh9UWfJ4WsW8vRXmO3NRVmwMPZuFudNeo44IcR2"
+    api_key = os.getenv('EIA_API_KEY')
+    if not api_key:
+        print("❌ EIA_API_KEY environment variable not set")
+        print("   Please set EIA_API_KEY in your .env file or environment")
+        return
     
     print("🔋 EIA API Endpoint Testing")
     print("=" * 50)

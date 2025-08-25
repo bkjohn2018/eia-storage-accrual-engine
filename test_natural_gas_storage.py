@@ -6,11 +6,16 @@ Test natural gas storage data using the exact API call from the user
 import requests
 import json
 import pandas as pd
+import os
 from datetime import datetime
 
 def test_natural_gas_storage():
     """Test the exact natural gas storage API call"""
-    api_key = "7Zh9UWfJ4WsW8vRXmO3NRVmwMPZuFudNeo44IcR2"
+    api_key = os.getenv('EIA_API_KEY')
+    if not api_key:
+        print("❌ EIA_API_KEY environment variable not set")
+        print("   Please set EIA_API_KEY in your .env file or environment")
+        return None
     
     print("🔋 Natural Gas Storage API Test")
     print("=" * 50)

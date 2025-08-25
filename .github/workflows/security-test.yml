@@ -1,0 +1,97 @@
+name: Security and API Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run security checks weekly
+    - cron: '0 2 * * 1'
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install detect-secrets
+    
+    - name: Run security scan
+      run: |
+        echo "🔍 Scanning for secrets..."
+        detect-secrets scan --baseline .secrets.baseline || true
+        echo "✅ Security scan complete"
+    
+    - name: Check for hardcoded API keys
+      run: |
+        echo "🔍 Checking for hardcoded API keys..."
+        if grep -r "7Zh9UWfJ4WsW8vRXmO3NRVmwMPZuFudNeo44IcR2" .; then
+          echo "❌ Found hardcoded API key!"
+          exit 1
+        else
+          echo "✅ No hardcoded API keys found"
+        fi
+
+  api-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test API connectivity
+      env:
+        EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+      run: |
+        echo "🔋 Testing EIA API connectivity..."
+        python test_natural_gas.py
+        echo "✅ API test complete"
+    
+    - name: Run smoke tests
+      env:
+        EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+      run: |
+        echo "🧪 Running smoke tests..."
+        pytest -q
+        echo "✅ Smoke tests complete"
+
+  environment-setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test environment setup
+      env:
+        EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+      run: |
+        echo "🔧 Testing environment setup..."
+        python scripts/setup_env.py
+        echo "✅ Environment setup test complete"

@@ -44,3 +44,12 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [manual]
+      
+      - id: detect-secrets
+        name: Detect Secrets
+        entry: detect-secrets scan
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
+        args: [--baseline, .secrets.baseline]

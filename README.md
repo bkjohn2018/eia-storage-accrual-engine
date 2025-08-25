@@ -4,12 +4,33 @@ End-to-end pipeline and dashboard for energy accountants to estimate storage acc
 
 ---
 
+## 🔒 Security Notice
+
+**IMPORTANT**: This project requires an EIA API key. Never commit API keys to version control.
+
+**Local Development:**
+1. Copy `env.example` to `.env`
+2. Add your EIA API key to `.env`
+3. Keep `.env` out of version control
+
+**CI/CD (GitHub Actions):**
+- Repository Secret `EIA_API_KEY` is configured
+- GitHub Actions automatically use the secret
+
+See [SECURITY.md](SECURITY.md) for detailed security guidelines.
+
+---
+
 ## 🚀 Quickstart
 
 ```bash
 # clone repo
 git clone https://github.com/bkjohn2018/eia-storage-accrual-engine.git
 cd eia-storage-accrual-engine
+
+# setup environment
+cp env.example .env
+# Edit .env and add your EIA_API_KEY
 
 # install dependencies
 pip install -r requirements.txt  # or conda env create -f environment.yml

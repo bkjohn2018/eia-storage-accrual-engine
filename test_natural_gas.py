@@ -11,8 +11,13 @@ def main():
     print("🔋 Natural Gas Storage Data Test")
     print("=" * 50)
     
-    # Initialize analyzer with API key
-    api_key = "7Zh9UWfJ4WsW8vRXmO3NRVmwMPZuFudNeo44IcR2"
+    # Initialize analyzer with API key from environment
+    api_key = os.getenv('EIA_API_KEY')
+    if not api_key:
+        print("❌ EIA_API_KEY environment variable not set")
+        print("   Please set EIA_API_KEY in your .env file or environment")
+        return
+    
     analyzer = EIAEnergyAnalyzer(api_key=api_key)
     
     print(f"✅ API Key configured: {api_key[:10]}...")
