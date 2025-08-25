@@ -194,3 +194,30 @@ Thumbs.db
 
 # Windows
 *.lnk
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.egg-info/
+
+# Environments
+.env
+.venv/
+.conda/
+.ipynb_checkpoints/
+
+# Build
+dist/
+build/
+
+# Data & outputs
+data/*
+outputs/*
+!data/.gitkeep
+!outputs/.gitkeep
+
+# Streamlit
+.streamlit/
